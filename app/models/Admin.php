@@ -241,7 +241,7 @@ class Admin extends Database{
     }
 
     public function get_num_user_clicks($id){
-        $result = Database::select($this->tbl_links, "click", " user_id=$id");
+        $result = Database::select($this->tbl_links, "clicks", " user_id=$id");
         if(!$result){
             return 0;
         }else{

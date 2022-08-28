@@ -3,52 +3,60 @@
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            <li class="nav-item nav-profile">
-              <!-- <a href="profile.php" class="nav-link">
-                <div class="nav-profile-image">
-                  <img src="assets/images/faces/face1.jpg" alt="profile">
-                  <span class="login-status online"></span> -->
-                  <!--change to offline or busy as needed-->
-                <!-- </div>
-                <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2"><?=$userFullName?></span>
-                  <span class="text-secondary text-small"><?=$userEmail?></span>
-                </div>
-                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-              </a> -->
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?=BASE_URL . "/user/dashboard.php" ?>">
-                <span class="menu-title">Dashboard</span>
-                <i class="mdi mdi-home menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?=BASE_URL . "/user/links.php" ?>">
-                <span class="menu-title">My Links</span>
-                <i class="mdi mdi-link menu-icon"></i>
-              </a>
-            </li> 
+            
+           
+            
             <li class="nav-item sidebar-actions">
-              <span class="nav-link">
-                <div class="border-bottom">
-                  <h6 class="font-weight-normal mb-3">Categorie</h6>
-                </div>
-                <select class="btn btn-block btn-lg btn-gradient-primary mt-4" name="" id="">
-                  <option class="gradient-bullet-list mt-4 value=">Free</option>
-                  <option class="gradient-bullet-list mt-4 value=">Pro</option>
-                </select>
-                
-                <div class="mt-4">
-                  <div class="border-bottom">
-                    <p class="text-secondary"></p>
-                  </div>
-                  <ul class="gradient-bullet-list mt-4">
-                    <li>Free</li>
-                    <li></li>
-                  </ul>
-                </div>
-              </span>
+            <?php
+                      $admin = new Admin;
+                      $links = new Link;
+                      $userLink = new Link;
+
+                      $user_links = $userLink->get_num_user_link ($userId);
+                    ?>
+                  <div class="d-flex justify-content-between btn btn-light btn-sm text-secondary">                    
+                    <h5 class="font-weight-bold text-dark">LINKS</h5>
+                    <p class=""><?=$user_links?> Results</p>
+                  </div>                    
+                  <!-- <p class="card-description"> Add class <code>.table</code> </p> -->
+                  <div class="">
+                    <table class="table table-hover">
+                      
+                      <tbody>
+
+                          <?php 
+                              
+                              $links = $links->getUserLinks($userId);
+                              while($row =  $links->fetch_assoc()){
+
+                                  $num_cliks = $admin->get_num_user_clicks($row['id']);
+                                  $date = date_create($row["created_at"]);
+                                  $url = $row["url"];
+                                    
+
+                                  $user = $admin->getUsers();
+                                  while($user_row = $user->fetch_assoc()){
+                                    $user_name = $user_row["first_name"]." ". $user_row["last_name"];
+                                  }
+                                  echo '<tr>
+                                          <td>'.date_format($date, "M d").'
+                                            <br>
+                                              <span class="font-weight-bold">'.$row["title"].'</span>
+                                            <br>
+                                            <p class="text-danger">'.$row["short_url"].'
+                                              <i class=" btn btn-sm  mdi mdi-signal text-primary">'.$num_cliks.'</i>  
+                                              <a href="view.php?action=view&id='.$row["id"].'"<i class="mdi mdi-eye text-info"></i></a>
+                                            </p>  
+                                          </td>  
+                                        </tr>';
+                                  
+
+                              }
+                          
+                          ?>
+
+                      </tbody>
+                    </table>              
             </li>           
           </ul>
         </nav>

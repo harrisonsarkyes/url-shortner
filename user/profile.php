@@ -45,7 +45,7 @@
                                   $group = $row["group"];
                                 }
                                   $users_data = $user->get_user($userId);
-                                  $full_name = "";
+                                //   $full_name = "";
                                   while($row =  $users_data->fetch_assoc()){
                                       
                                       $full_name = $row["first_name"]. ' ' .$row["last_name"];

@@ -12,7 +12,7 @@ if(isset($_POST["submit"])){
   } 
 
     if(isset($_GET["error"]) && $_GET["error"] == "duplicate"){
-      $duplicate_email = '<div class="alert alert-danger" role="alert">
+      $duplicate_url = '<div class="alert alert-danger" role="alert">
                           <strong>Email alraidy exist</strong>
                           </div>';
     }

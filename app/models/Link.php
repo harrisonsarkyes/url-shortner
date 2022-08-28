@@ -18,7 +18,7 @@ class Link extends Database{
             //check number of links
             $id = $_POST['user_id'];
             $links = Database::select($this->table, "*", "user_id='$id'");
-        if(!$links->num_rows){
+        if(!$links->num_rows > 10){
             exit("Sorry.. Update your status to add more likes.");
         } else{
 
@@ -32,11 +32,8 @@ class Link extends Database{
             }else{
                 $parameters = [
                     "url"       => $_POST['long_url'],
-                    "short_url" => $short_url,
-                    "user_id"       => $_POST['user_id'],
-                    // "created_by"=> $_SESSION["user_id"]
-                    // "tittle"   => $_POST["tittle"],
-
+                    "short_url" => "hash.ly/".$short_url,
+                    "user_id"       => $_POST['user_id']                  
                 ];
                 
                 
@@ -142,26 +139,37 @@ class Link extends Database{
 
     public function editLink(){
 
-        $id = $_POST["id"];
-        // $short_url = $this->short_url();
+        $id        = $_POST["id"];
+        $short_url = $_POST["short_url"];
 
-        //     // check for short url duplicate
-        //     $result = Database::select($this->table,  "short_url", "short_url='$short_url'");
+            // check for short url duplicate
+            $result = Database::select($this->table,  "short_url", "short_url='$short_url'");
             
-        //     if($result->num_rows > 0){
-        //         $short_url = $this->short_url();
-        //     }else{
-                $parameters = [
-                    "tittle"      => $_POST["tittle"],
-                    "url"         => $_POST["url"],
-                    "short_url"   => $_POST["short_url"],
-                    "id"          => $_POST["id"]                          
-                    ];  
+            if($result->num_rows > 0){
+                echo '.<div class="alert alert-danger">
+                    <strong>ERROR</strong> Custome link already exist
+                    </div>.';
 
-              
-        $result = Database::update($this->table, $parameters, "id= $id");
+            }else{
+                if(strlen($_POST["short_url"]) > 15){
+                    echo '.<div class="alert alert-danger">
+                    <strong>ERROR</strong> Link too long
+                    </div>.';
 
-        return $result;
-    }  
+                } else {
+                    $parameters = [
+                        "title"      => $_POST["title"],
+                        "short_url"   => $_POST["short_url"],
+                        "id"          => $_POST["id"]                          
+                        ]; 
+
+                    $result = Database::update($this->table, $parameters, "id= $id");
+    
+                    return $result;
+                }
+                
+                
+    } 
+} 
 
 }

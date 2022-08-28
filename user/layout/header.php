@@ -60,8 +60,8 @@
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="dashboard.php"><img src="assets/images/logo.svg" alt="logo" /></a>
-          <a class="navbar-brand brand-logo-mini" href="dashboard.php"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo" href="dashboard.php"><i class="mdi mdi-format-header-pound text-"></i></a>
+          <a class="navbar-brand brand-logo-mini" href="dashboard.php"><img src="" class="mdi mdi-format-header-pound text"/></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -73,12 +73,13 @@
                 <div class="input-group-prepend bg-transparent">
                   <i class="input-group-text border-0 mdi mdi-magnify"></i>
                 </div>
+                <p id="result">0</p>
                 <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
               </div>
             </form>
           </div>
           <div class="">
-            <form action="links.php" method="POST" class="forms-sample d-flex justify-content-between m-3 ">                            
+            <form action="view.php" method="POST" class="forms-sample d-flex justify-content-between m-3 ">                            
               <div class="form-group">
                 <input type="text" class="form-control form-control-sm" name="long_url" placeholder="Long_url"required>
               </div> 
@@ -91,14 +92,24 @@
             </form>
           </div>
           <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
+            <li class="bg-light rounded mt- mb-4 p-0 nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="profile.php" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
-                  <img src="assets/images/faces/face1.jpg" alt="image">
-                  <span class="availability-status online"></span>
+                  <!-- <img src="assets/images/faces/face1.jpg" alt="image"> -->
+                  <span class=""></span>
                 </div>
-                <div class="nav-profile-text">
-                  <p class="mb-1 text-black"><?=$userFirst." ".$userLast?></p>
+                <?php
+                    $user = new User;
+                      $group_id = $_SESSION["group"];
+                      $users_group = $user->getGroup($group_id);
+                      while($row = $users_group->fetch_assoc()){
+                        $group = $row["group"];
+                      }
+                    ?>
+                <div class="text-align-left nav-profile-text m-0 p-0">
+                  <br>
+                  <h5 class="mb-1 text-secondary"><?=$userFirst. " ". $userLast ?></h5>
+                  <p class="text-mudet"><?=$group?></p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -107,6 +118,9 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="<?=BASE_URL . "/user/profile.php" ?>">
                   <i class="mdi mdi-account-multiple me-2 text-primary"></i> Profile 
+                </a>
+                <a class="dropdown-item" href="<?=BASE_URL . "/user/upgradeAccount.php" ?>">
+                  <i class="mdi mdi-professional-hexagon me-2 text-primary"></i> Go Pro 
                 </a>
                 <a class="dropdown-item" href="logout.php?action=true">
                   <i class="mdi mdi-logout me-2 text-primary"></i> Signout 

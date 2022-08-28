@@ -85,8 +85,14 @@
                     <?= $delete_msg;?>
                     <?= $update_msg;?>
                     <?= $registration_msg;?>
+
+                    <?php
+                      $userLink = new Link;
+
+                      $user_links = $userLink->get_num_user_link ($userId);
+                    ?>
                   <div class="d-flex justify-content-between">                    
-                    <h4 class="btn btn-light btn-sm text-secondary">Results</h4>
+                    <h4 class="btn btn-light btn-sm text-secondary"><?=$user_links?> Results</h4>
                   </div>                    
                   <!-- <p class="card-description"> Add class <code>.table</code> </p> -->
                   <div class="table-responsive">

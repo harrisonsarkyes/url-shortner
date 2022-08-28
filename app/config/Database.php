@@ -4,7 +4,7 @@ class Database {
     // private $host = 
     private $username = "root";
     private $password = "";
-    private $db_name = "url_shortener";
+    private $db_name = "shortner";
     private $connection;
 
 

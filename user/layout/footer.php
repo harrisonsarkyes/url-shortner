@@ -16,16 +16,40 @@
       <script>
 
         function copy(){
-          let copy_link = document.getElementById("short_url");
+          let copy_link = document.getElementById("url");
+          let copied = document.getElementById("copied");
 
           copy_link.select();
           copy_link.setSelectionRange(0, 99999);
 
           navigator.clipboard.writeText(copy_link.value);
 
-          // alert("Copied Link to Clipboard");  
+          copied.innerHTML = "copied";
+
         }
+
+        function clickCounter() {
+        if (typeof (Storage) !== "undefined") {
+            if (localStorage.clickcount) {
+                localStorage.clickcount = Number(localStorage.clickcount) + 1;
+            } else {
+                localStorage.clickcount = 1;
+            }
+            document.getElementById("result").innerHTML = localStorage.clickcount;
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        window.location = '';
+    }
       </script>
+
+      <!-- <script>
+        let click = 0;
+    function fun(){
+        document.getElementById('countNum').innerHTML = ++click;
+        click = click
+    }
+      </script> -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
